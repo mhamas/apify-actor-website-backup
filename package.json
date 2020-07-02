@@ -1,5 +1,5 @@
 {
-  "name": "actor-quick-start",
+  "name": "apify-actor-website-backup",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
