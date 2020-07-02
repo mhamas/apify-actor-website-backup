@@ -1,3 +1,5 @@
+Test change
+
 This is a simple Apify actor that serves as a basic boilerplate.
 It has a Node.js source code, custom Dockerfile and it's hosted in a Git repository.
 Feel free to copy this actor, modify it and use it in your own actors.
@@ -52,7 +54,6 @@ docker run -it XYZ /bin/bash
 
 Note that this requires a base Docker image that contains bash or some other interactive shell.
 
-
 ## `.gitignore`
 
 Specifies files and directories that shouldn't be included in the Git repository.
@@ -76,7 +77,7 @@ For more information, see [Dockerfile reference](https://docs.docker.com/engine/
 Defines schema for the actor input. It is used by the Apify platform
 to automatically check the input for the actor and to generate
 a user interface to help users of your actor to run it.
-For more information, see [Input Schema documentation](https://apify.com/docs/actor/input-schema). 
+For more information, see [Input Schema documentation](https://apify.com/docs/actor/input-schema).
 
 ## `main.js`
 
