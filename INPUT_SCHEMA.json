@@ -1,12 +1,12 @@
 {
-  "title": "Input schema for the apify/quick-start actor.",
+  "title": "Input schema for the website-backup actor.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "message": {
-      "title": "Message",
+    "url": {
+      "title": "URL",
       "type": "string",
-      "description": "Just enter your hello world message.",
+      "description": "URL of a webpage you would like to create a backup of",
       "editor": "textfield"
     }
   },
