@@ -6,7 +6,7 @@
     "startURLs": {
       "title": "Start URLs",
       "type": "array",
-      "description": "A static list of URLs to scrape. To be able to add new URLs on the fly, enable the <b>Use request queue</b> option.<br><br>For details, see <a href='https://apify.com/apify/web-scraper#start-urls' target='_blank' rel='noopener'>Start URLs</a> in README.",
+      "description": "List of URL entry points. Each entry is an object of type <code>{'url': 'http://www.example.com'}</code>",
       "prefill": [{ "url": "https://blog.apify.com" }],
       "editor": "requestListSources"
     },
