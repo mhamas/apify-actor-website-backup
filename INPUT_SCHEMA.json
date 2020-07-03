@@ -24,12 +24,26 @@
       "minimum": 0,
       "default": 0
     },
+    "maxCrawlingDepth": {
+      "title": "Max crawling depth",
+      "type": "integer",
+      "description": "Defines how many links away from the StartURLs will the scraper descend. 0 means unlimited.",
+      "minimum": 0,
+      "default": 0
+    },
     "maxConcurrency": {
       "title": "Max concurrency",
       "type": "integer",
       "description": "Defines how many pages can be processed by the scraper in parallel. The scraper automatically increases and decreases concurrency based on available system resources. Use this option to set a hard limit.",
       "minimum": 1,
       "default": 50
+    },
+    "customKeyValueStore": {
+      "title": "Custom key value store",
+      "type": "string",
+      "description": "Use custom named key value store for saving results.",
+      "editor": "textfield",
+      "default": ""
     },
     "sameOrigin": {
       "title": "Same origin",

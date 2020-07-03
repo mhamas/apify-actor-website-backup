@@ -1,6 +1,7 @@
 const Apify = require('apify');
 const { URL } = require('url')
 
+const DEPTH_KEY = "depth";
 
 function uid_from_url(urlString) {
     // Only following characters are allowed in keys by Apify platform
@@ -25,11 +26,12 @@ Apify.main(async () => {
     const {
         startURLs,
         maxRequestsPerCrawl,
+        maxCrawlingDepth,
         maxConcurrency,
         linkSelector,
-        sameOrigin
+        customKeyValueStore,
+        sameOrigin,
     } = await Apify.getInput();
-    
     const requestQueue = await Apify.openRequestQueue();
     for (const startURL of startURLs) {
         await requestQueue.addRequest(startURL);
@@ -47,22 +49,33 @@ Apify.main(async () => {
         const uid = uid_from_url(request.url);
         console.log(`Creating backup of ${request.url} under id ${uid}`);
 
+        // Create mhtml snapshot of the current URL and store in into key value store
         const session = await page.target().createCDPSession();
         const { data: snapshot } = await session.send('Page.captureSnapshot', { format: 'mhtml' });
 
-        await Apify.setValue(
+        const store = customKeyValueStore
+            ? await Apify.openKeyValueStore(customKeyValueStore)
+            : await Apify.openKeyValueStore();
+        
+        await store.setValue(
             uid,
             snapshot,
-            {
-                contentType: 'multipart/related'
-            },
+            { contentType: 'multipart/related' },
         );
 
+        const currentDepth = request.userData[DEPTH_KEY] || 1;
+        if (maxCrawlingDepth && maxCrawlingDepth > 0 && currentDepth >= maxCrawlingDepth) {
+            return;
+        }
         await Apify.utils.enqueueLinks({
             page,
             selector: linkSelector,
             requestQueue,
             pseudoUrls: pseudoURLs,
+            transformRequestFunction: request => {
+                request.userData[DEPTH_KEY] = currentDepth + 1;
+                return request
+            }
         });
     };
 
