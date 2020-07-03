@@ -1,6 +1,5 @@
 const Apify = require('apify');
 const { URL } = require('url')
-const { v4: uuidv4 } = require('uuid');
 
 
 function uid_from_url(urlString) {
@@ -12,11 +11,11 @@ function uid_from_url(urlString) {
     // Retain only origin and pathname and replace all '/' by '_'
     let uid = `${url.hostname}${url.pathname}`.replace(/\//g, '_');
 
+    // Prefix current timestamp
+    uid = `${new Date().toISOString()}__${uid}`
+
     // Filter out characters that are not allowed
     uid = uid.split('').filter((char) => allowedCharacters.includes(char)).join('')
-
-    // Add unique uuid prefix
-    uid = `${uuidv4()}__${uid}`
 
     // Return first 256 characters of uid as it's the limit of the Apify platform
     return uid.slice(0, 256)
