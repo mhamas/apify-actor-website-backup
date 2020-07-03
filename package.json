@@ -3,10 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "apify": "^0.20.0"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.2"
+    "apify": "^0.21.0",
+    "uuid": "^8.2.0"
   },
   "scripts": {
     "start": "node main.js"

@@ -3,11 +3,39 @@
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "url": {
-      "title": "URL",
+    "startURLs": {
+      "title": "Start URLs",
+      "type": "array",
+      "description": "A static list of URLs to scrape. To be able to add new URLs on the fly, enable the <b>Use request queue</b> option.<br><br>For details, see <a href='https://apify.com/apify/web-scraper#start-urls' target='_blank' rel='noopener'>Start URLs</a> in README.",
+      "prefill": [{ "url": "https://blog.apify.com" }],
+      "editor": "requestListSources"
+    },
+    "linkSelector": {
+      "title": "Link selector",
       "type": "string",
-      "description": "URL of a webpage you would like to create a backup of",
-      "editor": "textfield"
+      "description": "CSS selector matching elements with 'href' attributes that should be enqueued. To enqueue urls from <code><div class=\"my-class\" href=...></code> tags, you would enter <strong>div.my-class</strong>. Leave empty to ignore all links.",
+      "editor": "textfield",
+      "prefill": "a"
+    },
+    "sameOrigin": {
+      "title": "Same origin",
+      "type": "boolean",
+      "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
+      "default": true
+    },
+    "maxRequestsPerCrawl": {
+      "title": "Max pages per run",
+      "type": "integer",
+      "description": "The maximum number of pages that the scraper will load. The scraper will stop when this limit is reached. It's always a good idea to set this limit in order to prevent excess platform usage for misconfigured scrapers. Note that the actual number of pages loaded might be slightly higher than this value.<br><br>If set to <code>0</code>, there is no limit.",
+      "minimum": 0,
+      "default": 0
+    },
+    "maxConcurrency": {
+      "title": "Max concurrency",
+      "type": "integer",
+      "description": "Defines how many pages can be processed by the scraper in parallel. The scraper automatically increases and decreases concurrency based on available system resources. Use this option to set a hard limit.",
+      "minimum": 1,
+      "default": 50
     }
   },
   "required": []
