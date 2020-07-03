@@ -1,11 +1,11 @@
 const Apify = require('apify');
-const { URL } = require('url')
+const { URL } = require('url');
 
-const DEPTH_KEY = "depth";
+const DEPTH_KEY = 'depth';
 
-function uid_from_url(urlString) {
+function uidFromURL(urlString) {
     // Only following characters are allowed in keys by Apify platform
-    const allowedCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!-_.\'()/'
+    const allowedCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!-_.\'()/';
 
     const url = new URL(urlString);
 
@@ -13,13 +13,13 @@ function uid_from_url(urlString) {
     let uid = `${url.hostname}${url.pathname}`.replace(/\//g, '_');
 
     // Prefix current timestamp
-    uid = `${new Date().toISOString()}__${uid}`
+    uid = `${new Date().toISOString()}__${uid}`;
 
     // Filter out characters that are not allowed
-    uid = uid.split('').filter((char) => allowedCharacters.includes(char)).join('')
+    uid = uid.split('').filter((char) => allowedCharacters.includes(char)).join('');
 
     // Return first 256 characters of uid as it's the limit of the Apify platform
-    return uid.slice(0, 256)
+    return uid.slice(0, 256);
 }
 
 Apify.main(async () => {
@@ -46,7 +46,8 @@ Apify.main(async () => {
     }
 
     const handlePageFunction = async ({ request, page }) => {
-        const uid = uid_from_url(request.url);
+        const uid = uidFromURL(request.url);
+        // eslint-disable-next-line no-console
         console.log(`Creating backup of ${request.url} under id ${uid}`);
 
         // Create mhtml snapshot of the current URL and store in into key value store
@@ -56,7 +57,7 @@ Apify.main(async () => {
         const store = customKeyValueStore
             ? await Apify.openKeyValueStore(customKeyValueStore)
             : await Apify.openKeyValueStore();
-        
+
         await store.setValue(
             uid,
             snapshot,
@@ -72,10 +73,10 @@ Apify.main(async () => {
             selector: linkSelector,
             requestQueue,
             pseudoUrls: pseudoURLs,
-            transformRequestFunction: request => {
-                request.userData[DEPTH_KEY] = currentDepth + 1;
-                return request
-            }
+            transformRequestFunction: (req) => {
+                req.userData[DEPTH_KEY] = currentDepth + 1;
+                return req;
+            },
         });
     };
 
@@ -85,7 +86,7 @@ Apify.main(async () => {
         maxRequestsPerCrawl,
         maxConcurrency,
         launchPuppeteerOptions: {
-            headless: true
+            headless: true,
         },
     });
 

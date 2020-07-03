@@ -1,11 +1,17 @@
 {
   "name": "apify-actor-website-backup",
   "version": "0.0.1",
+  "author": "Matej Hamas",
   "private": true,
   "dependencies": {
     "apify": "^0.21.0"
   },
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "lint": "eslint main.js"
+  },
+  "devDependencies": {
+    "@apify/eslint-config": "^0.1.0",
+    "eslint": "^7.3.1"
   }
 }
