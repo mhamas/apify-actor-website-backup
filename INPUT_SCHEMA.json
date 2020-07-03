@@ -17,12 +17,6 @@
       "editor": "textfield",
       "default": "a"
     },
-    "sameOrigin": {
-      "title": "Same origin",
-      "type": "boolean",
-      "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
-      "default": true
-    },
     "maxRequestsPerCrawl": {
       "title": "Max pages per run",
       "type": "integer",
@@ -36,6 +30,12 @@
       "description": "Defines how many pages can be processed by the scraper in parallel. The scraper automatically increases and decreases concurrency based on available system resources. Use this option to set a hard limit.",
       "minimum": 1,
       "default": 50
+    },
+    "sameOrigin": {
+      "title": "Same origin",
+      "type": "boolean",
+      "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
+      "default": true
     }
   },
   "required": []
