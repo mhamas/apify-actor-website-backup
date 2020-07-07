@@ -10,6 +10,4 @@ See [INPUT_SCHEMA.json](https://github.com/mato93/apify-actor-website-backup/blo
 
 ## Output
 
-Single `MHTML` snapshot is stored in a key value store (`default` or `named` depending on the input argument) for each URL visited.
-The key for each snapshot includes a timestamp and the URL in a human readable form. Note that the Apify platform only supports certain characters
-and limits the length of the key to 256 characters (that is why e.g. `/` is replace with `_`).
+Single zip file containing `MHTML` snapshot and its metadata is stored in a key value store (`default` or `named` depending on the input argument) for each URL visited. The key for each zip file includes a timestamp and the URL in a human readable form. Note that the Apify platform only supports certain characters and limits the length of the key to 256 characters (that is why e.g. `/` is replace with `_`).
