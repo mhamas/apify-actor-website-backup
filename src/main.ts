@@ -86,10 +86,7 @@ Apify.main(async () => {
         handlePageFunction,
         maxRequestsPerCrawl,
         maxConcurrency,
-        launchPuppeteerOptions: {
-            headless: true,
-        },
-    } as any);
+    });
 
     await crawler.run();
 });
