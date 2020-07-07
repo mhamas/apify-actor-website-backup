@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "apify": "^0.21.0",
+    "jszip": "^3.5.0",
     "typescript": "^3.9.6"
   },
   "scripts": {
@@ -19,6 +20,7 @@
     "@types/node": "^14.0.18",
     "@typescript-eslint/eslint-plugin": "^3.6.0",
     "@typescript-eslint/parser": "^3.6.0",
-    "eslint": "^7.3.1"
+    "eslint": "^7.3.1",
+    "@types/jszip": "^3.4.1"
   }
 }

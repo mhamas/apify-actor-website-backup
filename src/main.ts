@@ -1,18 +1,16 @@
 import * as Apify from 'apify';
+import * as JSZip from 'jszip';
 
 const DEPTH_KEY = 'depth';
 
-function uidFromURL(urlString: string): string {
+function uidFromURL(urlString: string, timestamp: string): string {
     // Only following characters are allowed in keys by Apify platform
     const allowedCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!-_.\'()/';
 
     const url = new URL(urlString);
 
-    // Retain only origin and pathname and replace all '/' by '_'
-    let uid = `${url.hostname}${url.pathname}`.replace(/\//g, '_');
-
-    // Prefix current timestamp
-    uid = `${new Date().toISOString()}__${uid}`;
+    // Replace all '/' by '_' and prefix with timestamp
+    let uid = `${timestamp}__${url.href}`.replace(/\//g, '_');
 
     // Filter out characters that are not allowed
     uid = uid.split('').filter((char) => allowedCharacters.includes(char)).join('');
@@ -46,7 +44,8 @@ Apify.main(async () => {
     }
 
     const handlePageFunction = async ({ request, page }: Apify.PuppeteerHandlePageInputs) => {
-        const uid = uidFromURL(request.url);
+        const timestamp = `${new Date().toISOString()}`;
+        const uid = uidFromURL(request.url, timestamp);
         Apify.utils.log.info(`Creating backup of ${request.url} under id ${uid}`);
 
         // Create mhtml snapshot of the current URL and store in into key value store
@@ -54,14 +53,29 @@ Apify.main(async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const { data: snapshot } = await session.send('Page.captureSnapshot', { format: 'mhtml' }) as any;
 
+        const filename = `${uid}.mhtml`;
+        const metadata = {
+            name: filename,
+            url: request.url,
+            timestamp,
+        };
+
+        // Store backup and metadata into a zip file
+        const zip = new JSZip();
+        const folder = zip.folder(uid);
+        folder!.file(filename, snapshot);
+        folder!.file('metadata.json', JSON.stringify(metadata));
+
+        const zipDataToWrite = await zip.generateAsync({ type: 'nodebuffer' });
+
         const store = customKeyValueStore
             ? await Apify.openKeyValueStore(customKeyValueStore)
             : await Apify.openKeyValueStore();
 
         await store.setValue(
             uid,
-            snapshot,
-            { contentType: 'multipart/related' },
+            zipDataToWrite,
+            { contentType: 'application/zip' },
         );
 
         const currentDepth = request.userData[DEPTH_KEY] || 1;
