@@ -46,7 +46,7 @@
       "default": ""
     },
     "sameOrigin": {
-      "title": "Same origin",
+      "title": "Only consider pages under the same domain as one of the provided URLs.",
       "type": "boolean",
       "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
       "default": true

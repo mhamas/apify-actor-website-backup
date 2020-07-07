@@ -1,9 +1,8 @@
-const Apify = require('apify');
-const { URL } = require('url');
+import * as Apify from 'apify';
 
 const DEPTH_KEY = 'depth';
 
-function uidFromURL(urlString) {
+function uidFromURL(urlString: string): string {
     // Only following characters are allowed in keys by Apify platform
     const allowedCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!-_.\'()/';
 
@@ -21,7 +20,6 @@ function uidFromURL(urlString) {
     // Return first 256 characters of uid as it's the limit of the Apify platform
     return uid.slice(0, 256);
 }
-
 Apify.main(async () => {
     const {
         startURLs,
@@ -31,13 +29,15 @@ Apify.main(async () => {
         linkSelector,
         customKeyValueStore,
         sameOrigin,
-    } = await Apify.getInput();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }: any = await Apify.getInput();
     const requestQueue = await Apify.openRequestQueue();
     for (const startURL of startURLs) {
         await requestQueue.addRequest(startURL);
     }
 
-    const pseudoURLs = [];
+    // We use pseudoURLs feature of Pupeteer crawler to enforce sameOrigin
+    const pseudoURLs: string[] = [];
     if (sameOrigin) {
         for (const startURL of startURLs) {
             const url = new URL(startURL.url);
@@ -45,14 +45,14 @@ Apify.main(async () => {
         }
     }
 
-    const handlePageFunction = async ({ request, page }) => {
+    const handlePageFunction = async ({ request, page }: Apify.PuppeteerHandlePageInputs) => {
         const uid = uidFromURL(request.url);
-        // eslint-disable-next-line no-console
-        console.log(`Creating backup of ${request.url} under id ${uid}`);
+        Apify.utils.log.info(`Creating backup of ${request.url} under id ${uid}`);
 
         // Create mhtml snapshot of the current URL and store in into key value store
         const session = await page.target().createCDPSession();
-        const { data: snapshot } = await session.send('Page.captureSnapshot', { format: 'mhtml' });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data: snapshot } = await session.send('Page.captureSnapshot', { format: 'mhtml' }) as any;
 
         const store = customKeyValueStore
             ? await Apify.openKeyValueStore(customKeyValueStore)
@@ -73,8 +73,9 @@ Apify.main(async () => {
             selector: linkSelector,
             requestQueue,
             pseudoUrls: pseudoURLs,
-            transformRequestFunction: (req) => {
-                req.userData[DEPTH_KEY] = currentDepth + 1;
+            transformRequestFunction: (req: Apify.RequestOptions) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (req.userData as any)[DEPTH_KEY] = currentDepth + 1;
                 return req;
             },
         });
@@ -85,7 +86,10 @@ Apify.main(async () => {
         handlePageFunction,
         maxRequestsPerCrawl,
         maxConcurrency,
-    });
+        launchPuppeteerOptions: {
+            headless: true,
+        },
+    } as any);
 
     await crawler.run();
 });
