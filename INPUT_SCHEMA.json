@@ -63,7 +63,8 @@
       "type": "array",
       "editor": "json",
       "description": "These search parameters will be removed from all URLs considered by the actor. You can e.g. remove <code>source</code>, <code>utm_source</code> and other parameters that are not relevant to your actor run.",
-      "default": []
+      "default": [],
+      "example": ["source", "utm_source", "ie"]
     }
   },
   "required": []
