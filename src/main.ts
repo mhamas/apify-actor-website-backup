@@ -1,6 +1,5 @@
 import Apify from 'apify';
 import JSZip from 'jszip';
-// import md5 from 'crypto-js/md5';
 import CryptoJS from 'crypto-js';
 
 const DEPTH_KEY = 'depth';
@@ -29,8 +28,9 @@ Apify.main(async () => {
         maxConcurrency,
         linkSelector,
         customKeyValueStore,
-        customDataset, // TODO
+        customDataset,
         sameOrigin,
+        ignoredSearchParams,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: any = await Apify.getInput();
     const requestQueue = await Apify.openRequestQueue();
@@ -49,8 +49,18 @@ Apify.main(async () => {
 
     const handlePageFunction: Apify.PuppeteerHandlePage = async ({ request, page }: Apify.PuppeteerHandlePageInputs) => {
         const timestamp = `${new Date().toISOString()}`;
-        const uid = uidFromURL(request.url, timestamp);
-        Apify.utils.log.info(`Creating backup of ${request.url} under id ${uid}`);
+
+        const url = new URL(request.url);
+        for (const param of ignoredSearchParams) {
+            if (url.searchParams.has(param)) {
+                url.searchParams.delete(param);
+            }
+        }
+
+        const urlString = url.toString();
+
+        const uid = uidFromURL(urlString, timestamp);
+        Apify.utils.log.info(`Creating backup of ${urlString} under id ${uid}`);
 
         // Create mhtml snapshot of the current URL and store in into key value store
         const session = await page.target().createCDPSession();
@@ -60,7 +70,7 @@ Apify.main(async () => {
         const filename = `${uid}.mhtml`;
         const metadata = {
             name: filename,
-            url: request.url,
+            url: urlString,
             timestamp,
         };
 
@@ -88,7 +98,7 @@ Apify.main(async () => {
 
         await dataset.pushData({
             name: filename,
-            url: request.url,
+            url: urlString,
             timestamp,
         });
 
