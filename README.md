@@ -9,4 +9,4 @@ Given URL entry points, the actors recursively crawls the links found on the pag
 
 ## Output
 
-Single zip file containing `MHTML` snapshot and its metadata is stored in a key value store (`default` or `named` depending on the input argument) for each URL visited. The key for each zip file includes a timestamp and the URL in a human readable form. Note that the Apify platform only supports certain characters and limits the length of the key to 256 characters (that is why e.g. `/` is replace with `_`). Apart from the key value store, metadata for the crawled webpages are also stored in a dataset.
+Single zip file containing `MHTML` snapshot and its metadata is stored in a key value store (`default` or `named` depending on the input argument) for each URL visited. The key for each zip file includes a timestamp, URL hash and the URL in a human readable form. Note that the Apify platform only supports certain characters and limits the length of the key to 256 characters (that is why e.g. `/` is removed). Apart from the key value store, metadata for the crawled webpages are also stored in a dataset (`default` or `named`).

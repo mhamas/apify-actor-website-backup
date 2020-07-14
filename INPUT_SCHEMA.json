@@ -45,6 +45,13 @@
       "editor": "textfield",
       "default": ""
     },
+    "customDataset": {
+      "title": "Custom dataset",
+      "type": "string",
+      "description": "Use custom dataset for saving metadata.",
+      "editor": "textfield",
+      "default": ""
+    },
     "sameOrigin": {
       "title": "Only consider pages under the same domain as one of the provided URLs.",
       "type": "boolean",

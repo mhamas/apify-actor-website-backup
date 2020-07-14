@@ -1,5 +1,7 @@
-import * as Apify from 'apify';
-import * as JSZip from 'jszip';
+import Apify from 'apify';
+import JSZip from 'jszip';
+// import md5 from 'crypto-js/md5';
+import CryptoJS from 'crypto-js';
 
 const DEPTH_KEY = 'depth';
 
@@ -8,9 +10,10 @@ function uidFromURL(urlString: string, timestamp: string): string {
     const allowedCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!-_.\'()/';
 
     const url = new URL(urlString);
+    const hash = CryptoJS.MD5(urlString).toString(CryptoJS.enc.Base64);
 
     // Replace all '/' by '_' and prefix with timestamp
-    let uid = `${timestamp}__${url.href}`.replace(/\//g, '_');
+    let uid = `${timestamp}__${hash}__${url.href}`.replace(/\//g, '');
 
     // Filter out characters that are not allowed
     uid = uid.split('').filter((char) => allowedCharacters.includes(char)).join('');
@@ -26,6 +29,7 @@ Apify.main(async () => {
         maxConcurrency,
         linkSelector,
         customKeyValueStore,
+        customDataset, // TODO
         sameOrigin,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: any = await Apify.getInput();
@@ -43,7 +47,7 @@ Apify.main(async () => {
         }
     }
 
-    const handlePageFunction = async ({ request, page }: Apify.PuppeteerHandlePageInputs) => {
+    const handlePageFunction: Apify.PuppeteerHandlePage = async ({ request, page }: Apify.PuppeteerHandlePageInputs) => {
         const timestamp = `${new Date().toISOString()}`;
         const uid = uidFromURL(request.url, timestamp);
         Apify.utils.log.info(`Creating backup of ${request.url} under id ${uid}`);
@@ -77,6 +81,16 @@ Apify.main(async () => {
             zipDataToWrite,
             { contentType: 'application/zip' },
         );
+
+        const dataset = customDataset
+            ? await Apify.openDataset(customDataset)
+            : await Apify.openDataset();
+
+        await dataset.pushData({
+            name: filename,
+            url: request.url,
+            timestamp,
+        });
 
         const currentDepth = request.userData[DEPTH_KEY] || 1;
         if (maxCrawlingDepth && maxCrawlingDepth > 0 && currentDepth >= maxCrawlingDepth) {

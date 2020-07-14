@@ -6,6 +6,7 @@
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "esModuleInterop": true,
     "lib": ["es2018", "es2018.asynciterable", "dom", "dom.iterable"],
     "rootDir": "src/",
     "outDir": "build/"
