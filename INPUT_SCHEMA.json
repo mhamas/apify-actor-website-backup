@@ -60,7 +60,7 @@
     },
     "ignoredSearchParams": {
       "title": "List of search parameters to ignore in URLs",
-      "type": "[String]",
+      "type": "array",
       "description": "These search parameters will be removed from all URLs considered by the actor. You can e.g. remove <code>source</code>, <code>utm_source</code> and other parameters that are not relevant to your actor run.",
       "default": []
     }
