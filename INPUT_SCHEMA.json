@@ -57,14 +57,6 @@
       "type": "boolean",
       "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
       "default": true
-    },
-    "ignoredSearchParams": {
-      "title": "List of search parameters to ignore in URLs",
-      "type": "array",
-      "editor": "json",
-      "description": "These search parameters will be removed from all URLs considered by the actor. You can e.g. remove <code>source</code>, <code>utm_source</code> and other parameters that are not relevant to your actor run.",
-      "default": [],
-      "prefill": ["source", "utm_source", "ie"]
     }
   },
   "required": []
