@@ -22,7 +22,7 @@
       "type": "integer",
       "description": "The maximum number of pages that the scraper will load. The scraper will stop when this limit is reached. It's always a good idea to set this limit in order to prevent excess platform usage for misconfigured scrapers. Note that the actual number of pages loaded might be slightly higher than this value.<br><br>If set to <code>0</code>, there is no limit.",
       "minimum": 0,
-      "default": 1
+      "default": 10
     },
     "maxCrawlingDepth": {
       "title": "Max crawling depth",

@@ -6,6 +6,19 @@ The purpose of this actor is to enable creation of website backups by recursivel
 
 Given URL entry points, the actors recursively crawls the links found on the pages using a provided CSS selector and create a separate [`MHTML`](https://en.wikipedia.org/wiki/MHTML) snapshot of each page. Each snapshot is taken after the full page is rendered with [Puppeteer crawler](https://sdk.apify.com/docs/examples/puppeteer-crawler) and includes all the content such as images and CSS. Hence, it can be used on any HTML / JS / Wordpress web sites which don't require authentication.
 
+## Input parameters
+| Field  | Type  | Description  |
+|---|---|---|
+| startURLs  |  array | List of URL entry points  |
+| linkSelector  | string  | CSS selector matching elements with 'href' attributes that should be enqueued  |
+| maxRequestsPerCrawl  |  integer |  The maximum number of pages that the scraper will load. The scraper will stop when this limit is reached. It's always a good idea to set this limit in order to prevent excess platform usage for misconfigured scrapers. Note that the actual number of pages loaded might be slightly higher than this value.If set to <code>0</code>, there is no limit. |
+| maxCrawlingDepth | integer | Defines how many links away from the StartURLs will the scraper descend. 0 means unlimited. |
+maxConcurrency | integer | Defines how many pages can be processed by the scraper in parallel. The scraper automatically increases and decreases concurrency based on available system resources. Use this option to set a hard limit. |
+customKeyValueStore | string | Use custom named key value store for saving results. If the key value store with this name doesn't yet exist, it's created. The snapshots of the pages will be saved in the key value store. |
+customDataset | string | Use custom named dataset for saving metadata. If the dataset with this name doesn't yet exist, it's created. The metadata about the snapshots of the pages will be saves in the dataset. |
+proxyConfiguration | object | Choose to use no proxy, Apify Proxy, or provide custom proxy URLs. |
+sameOrigin | boolean | Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively. |
+
 
 ## Output
 
