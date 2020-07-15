@@ -41,14 +41,14 @@
     "customKeyValueStore": {
       "title": "Custom key value store",
       "type": "string",
-      "description": "Use custom named key value store for saving results.",
+      "description": "Use custom named key value store for saving results. If the key value store with this name doesn't yet exist, it's created. The snapshots of the pages will be saved in the key value store.",
       "editor": "textfield",
       "default": ""
     },
     "customDataset": {
       "title": "Custom dataset",
       "type": "string",
-      "description": "Use custom named dataset for saving metadata.",
+      "description": "Use custom named dataset for saving metadata. If the dataset with this name doesn't yet exist, it's created. The metadata about the snapshots of the pages will be saves in the dataset.",
       "editor": "textfield",
       "default": ""
     },
