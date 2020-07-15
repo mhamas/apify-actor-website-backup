@@ -110,7 +110,6 @@ Apify.main(async () => {
         });
     };
 
-    console.log(proxyConfiguration);
     const proxyConfigurationObject = await Apify.createProxyConfiguration(proxyConfiguration);
     const crawler = new Apify.PuppeteerCrawler({
         requestQueue,
