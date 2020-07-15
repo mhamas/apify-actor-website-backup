@@ -48,9 +48,20 @@
     "customDataset": {
       "title": "Custom dataset",
       "type": "string",
-      "description": "Use custom dataset for saving metadata.",
+      "description": "Use custom named dataset for saving metadata.",
       "editor": "textfield",
       "default": ""
+    },
+    "proxyConfiguration": {
+      "sectionCaption": "Proxy and browser configuration",
+      "title": "Proxy configuration",
+      "type": "object",
+      "description": "Choose to use no proxy, Apify Proxy, or provide custom proxy URLs.",
+      "prefill": {
+        "useApifyProxy": false
+      },
+      "default": {},
+      "editor": "proxy"
     },
     "sameOrigin": {
       "title": "Only consider pages under the same domain as one of the provided URLs.",

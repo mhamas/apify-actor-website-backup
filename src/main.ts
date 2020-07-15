@@ -30,6 +30,7 @@ Apify.main(async () => {
         customKeyValueStore,
         customDataset,
         sameOrigin,
+        proxyConfiguration,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: any = await Apify.getInput();
     const requestQueue = await Apify.openRequestQueue();
@@ -112,6 +113,7 @@ Apify.main(async () => {
     const crawler = new Apify.PuppeteerCrawler({
         requestQueue,
         handlePageFunction,
+        proxyConfiguration,
         maxRequestsPerCrawl,
         maxConcurrency,
     });
