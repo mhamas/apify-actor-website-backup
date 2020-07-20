@@ -56,6 +56,7 @@
       "title": "Timeout (in seconds) for backuping a single URL.",
       "type": "integer",
       "description": "Timeout in seconds for doing a backup of a single URL. Try to increase this backup in case you see an error that <code>handlePage</code> function (which is doing a backup of single URL) is failing.",
+      "minimum": 60,
       "default": 120
     },
     "sameOrigin": {
@@ -67,6 +68,7 @@
     "searchParamsToIgnore": {
       "title": "URL search parameters to ignore",
       "type": "array",
+      "editor": "stringList",
       "description": "Names of URL search parameters (such as 'source', 'sourceid', etc.) that should be ignored in the URLs when crawling.",
       "default": []
     },
