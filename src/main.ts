@@ -22,14 +22,10 @@ function uidFromURL(urlString: string, timestamp: string): string {
 }
 
 function removeSearchParamsFromUrl(urlString: string, paramsToRemove: string[]): string {
-    console.log('Should remove some params, namely ', paramsToRemove);
     const url = new URL(urlString);
-    console.log('Url before: ', url.toString());
     for (const param of paramsToRemove) {
         url.searchParams.delete(param);
     }
-    console.log('Url after: ', url.toString());
-
     return url.toString();
 }
 
@@ -120,7 +116,6 @@ Apify.main(async () => {
             transformRequestFunction: (req: Apify.RequestOptions) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (req.userData as any)[DEPTH_KEY] = currentDepth + 1;
-                console.log('Going to check if some params should be removed');
                 if (searchParamsToIgnore.length > 0) {
                     req.url = removeSearchParamsFromUrl(req.url, searchParamsToIgnore);
                 }
