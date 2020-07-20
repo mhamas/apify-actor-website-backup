@@ -55,7 +55,7 @@
     "timeoutForSingleUrlInSeconds": {
       "title": "Timeout (in seconds) for backuping a single URL.",
       "type": "integer",
-      "description": "Timeout in seconds for doing a backup of a single URL. Try to increase this backup in case you see an error that <code>handlePage</code> function (which is doing a backup of single URL) is failing.",
+      "description": "Timeout in seconds for doing a backup of a single URL. Try to increase this timeout in case you see an error <code> Error: handlePageFunction timed out after X seconds. </code>.",
       "minimum": 1,
       "default": 120
     },
