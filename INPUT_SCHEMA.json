@@ -52,6 +52,24 @@
       "editor": "textfield",
       "default": ""
     },
+    "timeoutForSingleUrlInSeconds": {
+      "title": "Timeout (in seconds) for backuping a single URL.",
+      "type": "integer",
+      "description": "Timeout in seconds for doing a backup of a single URL. Try to increase this backup in case you see an error that <code>handlePage</code> function (which is doing a backup of single URL) is failing.",
+      "default": 120
+    },
+    "sameOrigin": {
+      "title": "Only consider pages under the same domain as one of the provided URLs.",
+      "type": "boolean",
+      "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
+      "default": true
+    },
+    "searchParamsToIgnore": {
+      "title": "URL search parameters to ignore",
+      "type": "array",
+      "description": "Names of URL search parameters (such as 'source', 'sourceid', etc.) that should be ignored in the URLs when crawling.",
+      "default": []
+    },
     "proxyConfiguration": {
       "sectionCaption": "Proxy and browser configuration",
       "title": "Proxy configuration",
@@ -62,12 +80,6 @@
       },
       "default": {},
       "editor": "proxy"
-    },
-    "sameOrigin": {
-      "title": "Only consider pages under the same domain as one of the provided URLs.",
-      "type": "boolean",
-      "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
-      "default": true
     }
   },
   "required": []

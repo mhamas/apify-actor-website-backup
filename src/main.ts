@@ -20,6 +20,15 @@ function uidFromURL(urlString: string, timestamp: string): string {
     // Return first 256 characters of uid as it's the limit of the Apify platform
     return uid.slice(0, 256);
 }
+
+function removeSearchParamsFromUrl(urlString: string, paramsToRemove: string[]): string {
+    const url = new URL(urlString);
+    for (const param of paramsToRemove) {
+        url.searchParams.delete(param);
+    }
+    return url.toString();
+}
+
 Apify.main(async () => {
     const {
         startURLs,
@@ -30,6 +39,8 @@ Apify.main(async () => {
         customKeyValueStore,
         customDataset,
         sameOrigin,
+        timeoutForSingleUrlInSeconds,
+        searchParamsToIgnore,
         proxyConfiguration,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: any = await Apify.getInput();
@@ -105,6 +116,9 @@ Apify.main(async () => {
             transformRequestFunction: (req: Apify.RequestOptions) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (req.userData as any)[DEPTH_KEY] = currentDepth + 1;
+                if (searchParamsToIgnore.length > 0) {
+                    req.url = removeSearchParamsFromUrl(req.url, []);
+                }
                 return req;
             },
         });
@@ -117,7 +131,7 @@ Apify.main(async () => {
         proxyConfiguration: proxyConfigurationObject,
         maxRequestsPerCrawl,
         maxConcurrency,
-        handlePageTimeoutSecs: 180,
+        handlePageTimeoutSecs: timeoutForSingleUrlInSeconds,
     });
 
     await crawler.run();

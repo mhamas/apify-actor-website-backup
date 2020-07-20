@@ -18,6 +18,8 @@ customKeyValueStore | string | Use custom named key value store for saving resul
 customDataset | string | Use custom named dataset for saving metadata. If the dataset with this name doesn't yet exist, it's created. The metadata about the snapshots of the pages will be saves in the dataset. |
 proxyConfiguration | object | Choose to use no proxy, Apify Proxy, or provide custom proxy URLs. |
 sameOrigin | boolean | Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively. |
+timeoutForSingleUrlInSeconds | integer | Timeout in seconds for doing a backup of a single URL. Try to increase this backup in case you see an error that <code>handlePage</code> function (which is doing a backup of single URL) is failing. | 
+searchParamsToIgnore | array | Names of URL search parameters (such as 'source', 'sourceid', etc.) that should be ignored in the URLs when crawling. |
 
 
 ## Output
