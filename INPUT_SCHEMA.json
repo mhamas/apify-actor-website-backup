@@ -59,18 +59,18 @@
       "minimum": 60,
       "default": 120
     },
-    "sameOrigin": {
-      "title": "Only consider pages under the same domain as one of the provided URLs.",
-      "type": "boolean",
-      "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
-      "default": true
-    },
     "searchParamsToIgnore": {
       "title": "URL search parameters to ignore",
       "type": "array",
       "editor": "stringList",
       "description": "Names of URL search parameters (such as 'source', 'sourceid', etc.) that should be ignored in the URLs when crawling.",
       "default": []
+    },
+    "sameOrigin": {
+      "title": "Only consider pages under the same domain as one of the provided URLs.",
+      "type": "boolean",
+      "description": "Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively.",
+      "default": true
     },
     "proxyConfiguration": {
       "sectionCaption": "Proxy and browser configuration",
