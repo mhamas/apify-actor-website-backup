@@ -122,7 +122,7 @@ Apify.main(async () => {
                 (req.userData as any)[DEPTH_KEY] = currentDepth + 1;
                 console.log('Going to check if some params should be removed');
                 if (searchParamsToIgnore.length > 0) {
-                    req.url = removeSearchParamsFromUrl(req.url, []);
+                    req.url = removeSearchParamsFromUrl(req.url, searchParamsToIgnore);
                 }
                 return req;
             },
