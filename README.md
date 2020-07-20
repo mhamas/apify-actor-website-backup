@@ -18,10 +18,14 @@ customKeyValueStore | string | Use custom named key value store for saving resul
 customDataset | string | Use custom named dataset for saving metadata. If the dataset with this name doesn't yet exist, it's created. The metadata about the snapshots of the pages will be saves in the dataset. |
 proxyConfiguration | object | Choose to use no proxy, Apify Proxy, or provide custom proxy URLs. |
 sameOrigin | boolean | Only backup URLs with the same origin as any of the start URL origins. E.g. when turned on for a single start URL <code>https://blog.apify.com</code>, only links with prefix <code>https://blog.apify.com</code> will be backed up recursively. |
-timeoutForSingleUrlInSeconds | integer | Timeout in seconds for doing a backup of a single URL. Try to increase this backup in case you see an error that <code>handlePage</code> function (which is doing a backup of single URL) is failing. | 
+timeoutForSingleUrlInSeconds | integer | Timeout in seconds for doing a backup of a single URL. Try to increase this backup in case you see an error that <code>handlePage</code> function (which is doing a backup of single URL) is failing. |
+navigationTimeoutInSeconds | integer | Timeout in seconds in which the navigation needs to finish. Try to increase this if you see an error <code>Navigation timeout of XXX ms exceeded </code>| 
 searchParamsToIgnore | array | Names of URL search parameters (such as 'source', 'sourceid', etc.) that should be ignored in the URLs when crawling. |
 
 
 ## Output
 
 Single zip file containing `MHTML` snapshot and its metadata is stored in a key value store (`default` or `named` depending on the input argument) for each URL visited. The key for each zip file includes a timestamp, URL hash and the URL in a human readable form. Note that the Apify platform only supports certain characters and limits the length of the key to 256 characters (that is why e.g. `/` is removed). Apart from the key value store, metadata for the crawled webpages are also stored in a dataset (`default` or `named`).
+
+## Compute unit consumption
+

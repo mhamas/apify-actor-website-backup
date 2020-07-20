@@ -40,6 +40,7 @@ Apify.main(async () => {
         customDataset,
         sameOrigin,
         timeoutForSingleUrlInSeconds,
+        navigationTimeoutInSeconds,
         searchParamsToIgnore,
         proxyConfiguration,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -132,6 +133,7 @@ Apify.main(async () => {
         maxRequestsPerCrawl,
         maxConcurrency,
         handlePageTimeoutSecs: timeoutForSingleUrlInSeconds,
+        gotoTimeoutSecs: navigationTimeoutInSeconds,
     });
 
     await crawler.run();

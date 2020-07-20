@@ -56,7 +56,14 @@
       "title": "Timeout (in seconds) for backuping a single URL.",
       "type": "integer",
       "description": "Timeout in seconds for doing a backup of a single URL. Try to increase this backup in case you see an error that <code>handlePage</code> function (which is doing a backup of single URL) is failing.",
-      "minimum": 60,
+      "minimum": 1,
+      "default": 120
+    },
+    "navigationTimeoutInSeconds": {
+      "title": "Timeout in which page navigation needs to finish, in seconds",
+      "type": "integer",
+      "description": "Timeout in seconds in which the navigation needs to finish. Try to increase this if you see an error <code>Navigation timeout of XXX ms exceeded </code>",
+      "minimum": 1,
       "default": 120
     },
     "searchParamsToIgnore": {
