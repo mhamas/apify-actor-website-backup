@@ -117,6 +117,7 @@ Apify.main(async () => {
         proxyConfiguration: proxyConfigurationObject,
         maxRequestsPerCrawl,
         maxConcurrency,
+        handlePageTimeoutSecs: 180,
     });
 
     await crawler.run();
