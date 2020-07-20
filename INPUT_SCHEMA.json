@@ -60,7 +60,7 @@
       "default": 120
     },
     "navigationTimeoutInSeconds": {
-      "title": "Timeout in which page navigation needs to finish, in seconds",
+      "title": "Timeout (in seconds) in which page navigation needs to finish",
       "type": "integer",
       "description": "Timeout in seconds in which the navigation needs to finish. Try to increase this if you see an error <code>Navigation timeout of XXX ms exceeded </code>",
       "minimum": 1,
