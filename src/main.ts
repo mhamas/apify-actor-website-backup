@@ -117,7 +117,7 @@ Apify.main(async () => {
             transformRequestFunction: (req: Apify.RequestOptions) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (req.userData as any)[DEPTH_KEY] = currentDepth + 1;
-                if (searchParamsToIgnore.length > 0) {
+                if (searchParamsToIgnore?.length > 0) {
                     req.url = removeSearchParamsFromUrl(req.url, searchParamsToIgnore);
                 }
                 return req;
@@ -125,7 +125,7 @@ Apify.main(async () => {
         });
     };
 
-    const proxyConfigurationObject = await Apify.createProxyConfiguration(proxyConfiguration);
+    const proxyConfigurationObject = await Apify.createProxyConfiguration(proxyConfiguration) ?? undefined;
     const crawler = new Apify.PuppeteerCrawler({
         requestQueue,
         handlePageFunction,
