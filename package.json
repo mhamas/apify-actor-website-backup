@@ -4,11 +4,11 @@
   "author": "Matej Hamas",
   "private": true,
   "dependencies": {
-    "@types/crypto-js": "^3.1.47",
-    "apify": "^0.21.0",
-    "crypto-js": "^4.0.0",
-    "jszip": "^3.5.0",
-    "typescript": "^3.9.6"
+    "apify": "^2.0.7",
+    "crypto-js": "^4.1.1",
+    "jszip": "^3.7.1",
+    "puppeteer": "^10.4.0",
+    "typescript": "^4.4.3"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -18,11 +18,11 @@
   },
   "main": "build/main.js",
   "devDependencies": {
-    "@apify/eslint-config": "^0.1.0",
-    "@types/jszip": "^3.4.1",
+    "@apify/eslint-config": "^0.1.4",
+    "@types/crypto-js": "^4.0.2",
     "@types/node": "^14.0.18",
-    "@typescript-eslint/eslint-plugin": "^3.6.0",
-    "@typescript-eslint/parser": "^3.6.0",
-    "eslint": "^7.3.1"
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0"
   }
 }

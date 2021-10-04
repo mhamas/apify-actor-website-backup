@@ -59,7 +59,8 @@ Apify.main(async () => {
         }
     }
 
-    const handlePageFunction: Apify.PuppeteerHandlePage = async ({ request, page }: Apify.PuppeteerHandlePageInputs) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handlePageFunction: Apify.PuppeteerHandlePage = async ({ request, page }: any) => { // use Apify.PupeteerHandlePageInputs when available
         const timestamp = `${new Date().toISOString()}`;
 
         const uid = uidFromURL(request.url, timestamp);
@@ -133,7 +134,7 @@ Apify.main(async () => {
         maxRequestsPerCrawl,
         maxConcurrency,
         handlePageTimeoutSecs: timeoutForSingleUrlInSeconds,
-        gotoTimeoutSecs: navigationTimeoutInSeconds,
+        navigationTimeoutSecs: navigationTimeoutInSeconds,
     });
 
     await crawler.run();
