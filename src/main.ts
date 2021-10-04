@@ -1,7 +1,6 @@
 import Apify from 'apify';
 import JSZip from 'jszip';
 import CryptoJS from 'crypto-js';
-import log from '@apify/log';
 
 const DEPTH_KEY = 'depth';
 
@@ -65,7 +64,7 @@ Apify.main(async () => {
         const timestamp = `${new Date().toISOString()}`;
 
         const uid = uidFromURL(request.url, timestamp);
-        log.info(`Creating backup of ${request.url} under id ${uid}`);
+        Apify.utils.log.info(`Creating backup of ${request.url} under id ${uid}`);
 
         // Create mhtml snapshot of the current URL and store in into key value store
         const session = await page.target().createCDPSession();
